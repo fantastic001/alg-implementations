@@ -71,6 +71,22 @@ void update_boundaries(node* curr, int depth, int* max, int* min)
 	}
 }
 
+void print_tree(node* root) 
+{
+	if (root != NULL) 
+	{
+		// we first print left subtree
+		print_tree(root->left);
+		
+		// now we print root
+		printf("%d ", root->val);
+
+		// and then we print right subtree
+		print_tree(root->right);
+		
+	}
+}
+
 int main() {
 	node* root = create_node(0);
 	insert(root, 2);
@@ -81,6 +97,7 @@ int main() {
 	insert(root, -3);
 	insert(root, -4);
 	insert(root, -5);
+	print_tree(root);
 	int max=0, min=1000000;
 	update_boundaries(root, 0, &max, &min);;
 	printf("max and min: %d %d\n", max, min);
