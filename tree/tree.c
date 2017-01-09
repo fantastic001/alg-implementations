@@ -87,6 +87,49 @@ void print_tree(node* root)
 	}
 }
 
+/*
+This function deletes node in tree and returns node which will replace deleted node 
+
+How to use?
+
+for example, if we want to delete left child of root we will use function like this:
+
+root->left = delete_node(root->left);
+*/
+node* delete_node(node* n) 
+{
+	node* res = NULL;
+	if (n->right == NULL) 
+	{
+		res = n->left; 
+		free(n);
+	}
+	else 
+	{
+		if (n->right->left == NULL) 
+		{
+			res = n->right;
+			res->left = n->left;
+			free(n);
+		}
+		else 
+		{
+			node* curr = n->right;
+			node* p = n;
+			while (curr->left != NULL) {
+				p = curr;
+				curr = curr->left;
+			}
+			p->left = curr->right;
+			res = curr;
+			res->left = n->left;
+			res->right = n->right;
+			free(n);
+		}
+	}
+	return res;
+}
+
 int main() {
 	node* root = create_node(0);
 	insert(root, 2);
@@ -98,6 +141,21 @@ int main() {
 	insert(root, -4);
 	insert(root, -5);
 	print_tree(root);
+	printf("\n");
+	while (root->left != NULL) 
+	{
+		root->left = delete_node(root->left);
+		print_tree(root);
+		printf("\n");
+	}
+	while (root->right != NULL) 
+	{
+		root->right = delete_node(root->right);
+		print_tree(root);
+		printf("\n");
+	}
+	print_tree(root);
+	printf("\n");
 	int max=0, min=1000000;
 	update_boundaries(root, 0, &max, &min);;
 	printf("max and min: %d %d\n", max, min);
