@@ -39,20 +39,19 @@ void insert(node* curr, int a)
 	}
 }
 
-int intree(node* curr, int a) 
+node* find_node(node* curr, int a) 
 {
-	if (a == curr->val) return 1; 
+	if (curr == NULL) return NULL;
+	if (a == curr->val) return curr; 
 	else 
 	{
 		if (a > curr->val) 
 		{
-			if (curr->right == NULL) return 0; 
-			else return intree(curr->right, a);
+			return find_node(curr->right, a);
 		}
 		else 
 		{
-			if (curr->left == NULL) return 0; 
-			else return intree(curr->left, a);
+			return find_node(curr->left, a);
 		}
 	}
 }
@@ -142,6 +141,8 @@ int main() {
 	insert(root, -5);
 	print_tree(root);
 	printf("\n");
+	node* n = find_node(root, 2);
+	printf("%d\n", n->val);
 	while (root->left != NULL) 
 	{
 		root->left = delete_node(root->left);
