@@ -11,7 +11,7 @@ typedef struct node_st {
 
 node* create_node(int a) 
 {
-	node* n = malloc(sizeof(int));
+	node* n = malloc(sizeof(node));
 	n->val = a; 
 	n->left = NULL; 
 	n->right = NULL;
