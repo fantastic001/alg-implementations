@@ -39,6 +39,20 @@ void insert(node* curr, int a)
 	}
 }
 
+int is_leaf(node* n) 
+{
+	return n->left == NULL && n->right == NULL; 
+}
+
+node* find_parent(node* n, int a) 
+{
+	if (n == NULL) return NULL; 
+	if (n->left != NULL && n->left->val == a) return n;
+	if (n->right != NULL && n->right->val == a) return n; 
+	if (a < n->val) return find_parent(n->left, a);
+	else return find_parent(n->right, a);
+}
+
 node* find_node(node* curr, int a) 
 {
 	if (curr == NULL) return NULL;
@@ -129,6 +143,16 @@ node* delete_node(node* n)
 	return res;
 }
 
+void delete_left(node* n) 
+{
+	if (n->left != NULL) n->left = delete_node(n->left);
+}
+
+void delete_right(node* n) 
+{
+	if (n->left != NULL) n->right = delete_node(n->right);
+}
+
 int main() {
 	node* root = create_node(0);
 	insert(root, 2);
@@ -143,18 +167,8 @@ int main() {
 	printf("\n");
 	node* n = find_node(root, 2);
 	printf("%d\n", n->val);
-	while (root->left != NULL) 
-	{
-		root->left = delete_node(root->left);
-		print_tree(root);
-		printf("\n");
-	}
-	while (root->right != NULL) 
-	{
-		root->right = delete_node(root->right);
-		print_tree(root);
-		printf("\n");
-	}
+
+	delete_right(find_parent(root, 2));
 	print_tree(root);
 	printf("\n");
 	int max=0, min=1000000;
