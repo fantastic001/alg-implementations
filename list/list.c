@@ -56,6 +56,33 @@ void add_start(list* l, int a)
 	}
 }
 
+void insert_sorted(list* l, int a) 
+{
+	node* curr = l->start; 
+	node* prev = NULL; 
+	if (l->start == NULL) 
+	{
+		l->start = create_node(a);
+	}
+	else 
+	{
+		while (curr != NULL && curr->value < a) 
+		{
+			prev = curr; 
+			curr = curr->next; 
+		}
+		if (curr == NULL) 
+		{
+			prev->next = create_node(a); 
+		}
+		else 
+		{
+			prev->next = create_node(a);
+			prev->next->next = curr; 
+		}
+	}
+}
+
 void print(list* l) 
 {
 	node* curr = l->start; 
